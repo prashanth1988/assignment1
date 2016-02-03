@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title>Design Details</title>
+    <link rel="stylesheet" href="css/main.less">
+    <link rel="stylesheet" href="css/main.css">     
+    <link rel="stylesheet" href="css/bootstrap.min.css">   
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script type="text/javascript" src="scripts/jquery-2.1.3.js"></script>
+    <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=geometry&v=3.exp"></script>
+    <script type="text/javascript" src="scripts/worksData.js"></script>
+    <script type="text/javascript" src="scripts/handler.js"></script>
+    <script type="text/javascript" src="scripts/kinetic.js"></script>
+    <script type="text/javascript" src="scripts/hdsolar2.js"></script>
+    <script type="text/javascript" src="scripts/d3.min.js"></script>
+    <script type="text/javascript" src="scripts/verify.js"></script>
+</head>
+<body>
+    <div id="container">
+        <div class="rel">
+
+            <div id="content_ziba">
+                <div class="rel">
+                        <div class="rel clearfix">
+                            <div id="sidebar">
+                                <div class="proposalpage">
+                                    <div class="section-back">                                                                           
+                                        <div class="btn_ziba orange cancel" onclick="closepoppup()">                                            
+                                            Cancel                                             
+                                        </div>                                                                           
+                                    </div>
+                                    <div class="form-group">
+                                    <div class="element">
+                                            <div class="label_ziba">
+                                                <label>Proposal name</label>
+                                            </div>
+                                            <div class="input">
+                                                <input type="text"  id="proposalname" class="text">
+                                            </div>
+                                        </div>
+                                        <div class='title'>
+                                            <span id="customername">-</span>
+                                        </div>
+                                        <div class="element">
+                                                <div class="label_ziba" >
+                                                    <label>Address</label>
+                                                </div>
+                                                <div class="input">
+                                                    <input type="text" id = "addressLine1" class="text" readonly>
+                                                    <input type="text" id = "addressLine2" class="text" readonly>
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <div id='billanalysis'>
+                                        <h4>Bill Analysis</h4>
+                                        <div class="element">
+                                        Annual Usage :
+                                        <span id='annualusage'>-</span>&nbsp;kWh
+                                        </div>   
+                                        <div class="element">
+                                        Pre solar Utility :
+                                        $&nbsp;<span id='presolarutility'>-</span>
+                                        </div>
+                                        <div class="element">
+                                        Post solar Utility:
+                                        $&nbsp;<span id='postsolarutility'>-</span>
+                                        </div>
+                                    </div>
+                                    <div id='designanalysis'>
+                                        <h4>Design Analysis</h4>
+                                        <div class="element">
+                                        System Size :
+                                        <span id='systemsize'>-</span>&nbsp;kW
+                                        </div>   
+                                        <div class="element">
+                                        Year 1 Production :
+                                        <span id='year1prod'>-</span>&nbsp;kWh
+                                        </div>
+                                        <div class="element">
+                                        Energy Offset :
+                                        <span id='offset'>-</span>&nbsp;%
+                                        </div>
+                                        <div class="element">
+                                        System Yield :
+                                        <span id='yield'>-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="main">
+                                <div class="rel clearfix middlecontent">
+                                    <div id="utility">
+                                        <div class="proposaltitle">
+                                            1. Estimate Utility Costs
+                                        </div>
+                                        <div id="utilitydetails">
+                                            <div class="left">
+                                                <div id = "" class="a">                                          
+                                                    Utility Provider:                                            
+                                                    <select id="rate_provider" class ="dropdownelem">
+                                                        
+                                                    </select>
+                                                </div>
+                                                <div id = "" class="a">                                          
+                                                    Current Tariff                                            
+                                                    <select id="currenttariff" class ="dropdownelem" onchange="updateOnTaxRateChange()">
+                                                    </select>
+                                                </div>
+                                                <div id = "" class="a">                                          
+                                                    After-Solar Tariff                                           
+                                                    <select id="aftertariff" class ="dropdownelem">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="right">
+                                                <div id = "" class="a">                                          
+                                                    Average $/kwh                                           
+                                                    <input type="text" id = "avgkwh" class="numberval" style="margin-left: 10%; width: 40%;">
+                                                </div>
+                                                <div id = "" class="a">                                          
+                                                    Utility tax rate                                           
+                                                    <input type="text" id="taxrate" class="numberval" style="margin-left: 12%; width: 40%;">
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                            <div id="bills">
+                                                <h4 style ="margin-left: 1%;">Bills & Usage</h4>
+                                                <div class='billradio'>
+                                                    <input type="radio" name="billtype"  value="auto" style="display: block; margin-right: 5px;" checked="checked">Auto&nbsp;Fill
+                                                    <input type="radio" name="billtype"  value="manual" style="display: block; margin-left: 25px; margin-right: 5px;">Manual&nbsp;Fill
+                                                </div>
+                                                <div style="display: -webkit-box; margin-left: 5%; width: 98%;">
+                                                    <table style="width: 12%;">
+                                                        <tr>
+                                                            <td></td>
+                                                            <td style="padding-left: 11%;">Annual</td>
+                                                        </tr>
+                                                        <tr><td style="line-height: 5px;"><br></td></tr>
+                                                        <tr>
+                                                            <td>$</td>
+                                                            <td><input type="text" class="usagetable numberval" id ="annualbill" style="width: 63%;" onclick="onannualbill()" onchange="consumptioncall()"></td>
+                                                        </tr>
+                                                        <tr><td style="line-height: 10px;"><br></td></tr>
+                                                        <tr>
+                                                            <td>kWh</td>
+                                                            <td><input type="text" class="usagetable numberval" id="kwhusage" style="width: 63%;"  onclick="onannualusage()" onchange="updateOnYearly()"></td>
+                                                        </tr>
+                                                    </table>
+                                                
+                                                <div class="verticalbar">&nbsp;</div>
+                                                <table id="firsttable">
+                                                    <tr>
+                                                        <td class="usageheading">Jan</td>
+                                                        <td class="usageheading">Feb</td>
+                                                        <td class="usageheading">Mar</td>
+                                                        <td class="usageheading">Apr</td>
+                                                        <td class="usageheading">May</td>
+                                                        <td class="usageheading">Jun</td>
+                                                        <td class="usageheading">Jul</td>
+                                                        <td class="usageheading">Aug</td>
+                                                        <td class="usageheading">Sep</td>
+                                                        <td class="usageheading">Oct</td>
+                                                        <td class="usageheading">Nov</td>
+                                                        <td class="usageheading">Dec</td>
+                                                    </tr>
+                                                    <tr><td style="line-height: 5px;"><br></td></tr>
+                                                    <tr>
+                                                        <td><input type="text" class="billtable numberval" id ="billmonth_1" onclick="onmonthlybill()"></td> 
+                                                        <td><input type="text" class="billtable numberval" id ="billmonth_2"></td> 
+                                                        <td><input type="text" class="billtable numberval" id ="billmonth_3"></td> 
+                                                        <td><input type="text" class="billtable numberval" id ="billmonth_4"></td> 
+                                                        <td><input type="text" class="billtable numberval" id ="billmonth_5"></td> 
+                                                        <td><input type="text" class="billtable numberval" id ="billmonth_6"></td> 
+                                                        <td><input type="text" class="billtable numberval" id ="billmonth_7"></td> 
+                                                        <td><input type="text" class="billtable numberval" id ="billmonth_8"></td> 
+                                                        <td><input type="text" class="billtable numberval" id ="billmonth_9"></td> 
+                                                        <td><input type="text" class="billtable numberval" id ="billmonth_10"></td> 
+                                                        <td><input type="text" class="billtable numberval" id ="billmonth_11"></td> 
+                                                        <td><input type="text" class="billtable numberval" id ="billmonth_12" onchange="monthlyconsumptioncall()"></td>                                                         
+                                                    </tr>
+                                                    <tr><td style="line-height: 10px;"><br></td></tr>
+                                                    <tr>
+                                                        <td><input type="text" class="usagetable numberval" id ="usagemonth_1"  onclick="onmonthlyusage()"></td>
+                                                        <td><input type="text" class="usagetable numberval" id ="usagemonth_2"></td>
+                                                        <td><input type="text" class="usagetable numberval" id ="usagemonth_3"></td>
+                                                        <td><input type="text" class="usagetable numberval" id ="usagemonth_4"></td>
+                                                        <td><input type="text" class="usagetable numberval" id ="usagemonth_5"></td>
+                                                        <td><input type="text" class="usagetable numberval" id ="usagemonth_6"></td>
+                                                        <td><input type="text" class="usagetable numberval" id ="usagemonth_7"></td>
+                                                        <td><input type="text" class="usagetable numberval" id ="usagemonth_8"></td>
+                                                        <td><input type="text" class="usagetable numberval" id ="usagemonth_9"></td>
+                                                        <td><input type="text" class="usagetable numberval" id ="usagemonth_10"></td>
+                                                        <td><input type="text" class="usagetable numberval" id ="usagemonth_11"></td>
+                                                        <td><input type="text" class="usagetable numberval" id ="usagemonth_12" onchange="updateOnYearly()"></td>                                                        
+                                                    </tr>
+                                                </table>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div id="design">
+                                        <div class="proposaltitle">
+                                            2. Design System
+                                        </div>
+                                        <div id="designrow">
+                                            <div id = "panelmodellabel">                                          
+                                                Solar&nbsp;Panel:                                            
+                                                <select id="panelmodelinput" class ="dropdownelem">
+                                                    <option value="panel1" ng-model="panelmodel">SunEdison 270 - Black on Black</option>
+                                                </select>
+                                            </div>
+                                            <div id = "inverter">                                          
+                                                Inverter                                            
+                                                <select id="inverterinput" class ="dropdownelem">
+                                                    <option value="inverter1" ng-model="panelmodel">Micro inverter</option>
+                                                    <option value="inverter2" ng-model="panelmodel">Enphase</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div style="padding:6px;height:100%;">
+                                            <div style="padding:4px;text-align:center;">
+                                                <div id="btnCloneSave" class="btn_ziba orange" style="width:80px;">Save</div>
+                                                <div id="btnCloneLoad" class="btn_ziba orange" style="width:80px;">Load</div>
+                                            </div>
+                                            <div id="map-panel" class="map-panel">
+                                                Map will be here
+                                            </div>
+                                        </div>
+                                        <br>
+                                            <div id="array">
+                                                <div id="arraytitle" style="display: none;">
+                                                    <div id="" style="text-align: center; margin-left: 18%;">
+                                                        Shading
+                                                    </div>                                        
+                                                    <hr id="horizontalbar">
+                                                        <div id="whole">
+                                                            <table style="width: 90%; margin-left: 10%; text-align: center;">
+                                                                <tr>
+                                                                    <td class="arrayheading"></td>
+                                                                    <td class="arrayheading">Azimuth</td>
+                                                                    <td class="arrayheading">Tilt</td>
+                                                                    <td class="arrayheading">Annual</td>
+                                                                    <td class="arrayheading">Jan</td>
+                                                                    <td class="arrayheading">Feb</td>
+                                                                    <td class="arrayheading">Mar</td>
+                                                                    <td class="arrayheading">Apr</td>
+                                                                    <td class="arrayheading">May</td>
+                                                                    <td class="arrayheading">Jun</td>
+                                                                    <td class="arrayheading">Jul</td>
+                                                                    <td class="arrayheading">Aug</td>
+                                                                    <td class="arrayheading">Sep</td>
+                                                                    <td class="arrayheading">Oct</td>
+                                                                    <td class="arrayheading">Nov</td>
+                                                                    <td class="arrayheading">Dec</td>
+                                                                </tr>
+                                                                <tr><td style="line-height: 8px;"><br></td></tr>
+                                                            </table>
+                                                        </div>                                                
+                                                </div>
+                                                <div class="array_cls">
+                                                
+                                                <div id="arraydetails" class="array_single" style="display:none;">
+                                                    <td><span class="arrayNumber"></span></td>
+                                                    <table class="arraytable">                                                    
+                                                        <tr>                                                            
+                                                            <td style="width: 9%;"><span id="azimuth">175</span></td>
+                                                            <td><input type="text" class=" numberval" id ="tilt"></td>
+                                                            <td><input type="text" class=" numberval" id ="yearlyshade" onchange="calculatemonthly()"></td>                                                    
+                                                            <td><input type="text" class=" numberval" id="janshade"></td>
+                                                            <td><input type="text" class=" numberval" id="febshade"></td>
+                                                            <td><input type="text" class=" numberval" id="marshade"></td>
+                                                            <td><input type="text" class=" numberval" id="aprshade"></td>
+                                                            <td><input type="text" class=" numberval" id="mayshade"></td>
+                                                            <td><input type="text" class=" numberval" id="junshade"></td>
+                                                            <td><input type="text" class=" numberval" id="julshade"></td>
+                                                            <td><input type="text" class=" numberval" id="augshade"></td>
+                                                            <td><input type="text" class=" numberval" id="sepshade"></td>
+                                                            <td><input type="text" class=" numberval" id="octshade"></td>
+                                                            <td><input type="text" class=" numberval" id="novshade"></td>
+                                                            <td><input type="text" class=" numberval" id="decshade"></td>                                                        
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
